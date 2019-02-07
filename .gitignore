@@ -1,0 +1,18 @@
+# Text files
+*.txt
+
+# PDF files
+*.pdf
+
+# Config files
+*.ini
+
+# Powerpoint files
+*.pptx
+
+# CSV files
+*.csv
+
+# Excel files
+*.xlsx
+
