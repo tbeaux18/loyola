@@ -10,10 +10,14 @@ Input: A collection Patterns of k-mers.
 Output: The overlap graph OVERLAP(Patterns)
 The overlap graph can be represented as either an adjacency matrix or an adjacency list.
 
+Input:
+    kmer pattern 1 \n
+    kmer pattern n \n
+Output:
+    Kmer is adjact to [List of adjacent sequences]
 """
 
 import sys
-from Bio import SeqIO
 
 
 class Node:
@@ -33,10 +37,9 @@ class Node:
             get_prefix(self)
     """
 
-    def __init__(self, record_id, sequence):
-        self.record_id = record_id
+    def __init__(self, sequence):
         self.node = sequence
-        self.kmer = int(3)
+        self.kmer = int(1)
         self.connected_nodes = []
 
     def add_connected_nodes(self, conn_node):
@@ -47,11 +50,6 @@ class Node:
         """ returns connected nodes """
 
         return self.connected_nodes
-
-    def get_record_id(self):
-        """ returns record_id """
-
-        return self.record_id
 
     def get_node_sequence(self):
         """ returns sequence """
@@ -86,11 +84,11 @@ class OverlapGraph:
         self.node_prefix = {}
         self.num_of_nodes = 0
 
-    def add_node(self, record_id, sequence):
+    def add_node(self, sequence):
         """ Adds a node object to node_dict instance """
         self.num_of_nodes += 1
-        new_node = Node(record_id, sequence)
-        self.node_dict[record_id] = new_node
+        new_node = Node(sequence)
+        self.node_dict[sequence] = new_node
         self.node_prefix[sequence] = new_node.get_prefix()
         return new_node
 
@@ -112,43 +110,26 @@ def main():
     """ runs main script """
 
     # takes in argument, include the .txt or .fa
-    fasta_text = sys.argv[1]
-
-    # creates a list of SeqIO objects for easy FASTA parsing
-    fasta_list = list(SeqIO.parse(fasta_text, "fasta"))
-
-
-    # Creating the initial dictionary that holds id and sequence
-    seq_dict = {}
-    for record in fasta_list:
-        seq_dict[str(record.seq)] = str(record.id)
-
+    kmer_list = sys.stdin.read().splitlines()
 
     # Initialize an OverlapGraph object
     overlap_graph = OverlapGraph()
 
-
     # Creating Node Objects within the Overlap Graph object
-    for key, value in seq_dict.items():
-        overlap_graph.add_node(value, key)
+    for kmer in kmer_list:
+        overlap_graph.add_node(kmer)
 
     # Adds the edges to the graph connecting the suffix and prefix of each sequence
     # Utilizes 3mers only for the moment
     overlap_graph.add_edges()
 
-
-    # initializes a temp formatting dict to how rosalind wants the result
-    format_dict = {}
-
-    for key, value in seq_dict.items():
-        result = overlap_graph.get_adj_list(value)
-        if result:
-            format_dict[value] = result
-
-    with open('overlap-output.txt', 'w') as output:
-        for key, value in format_dict.items():
-            for val in value:
-                output.write("{} {}\n".format(key, seq_dict[val]))
+    with open('2B-output.txt', 'w') as output:
+        for kmer in kmer_list:
+            if overlap_graph.get_adj_list(kmer):
+                output.write("{} is adjacent to {}.\n".format(\
+                kmer, ', '.join(overlap_graph.get_adj_list(kmer))))
+            else:
+                output.write("{} is adjacent to nothing.\n".format(kmer))
 
 if __name__ == '__main__':
     main()
