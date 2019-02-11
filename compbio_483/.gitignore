@@ -1,2 +1,20 @@
+
+# ignore text files 
 *.txt
+
+# ignore config files
 *.ini
+
+# ignore this file
+*.DS_Store
+
+# ignore csv files
+*.csv
+
+# ignore ppt files
+*.pptx
+
+# ignore tab files
+*.tab
+
+
