@@ -39,8 +39,8 @@ def generate_reverse_complement(dna_sequence):
 def main():
     """ Takes stdin and prints reverse comp to console """
 
-    #seq_line = sys.stdin.read().rstrip()
-    seq_line = 'ACCAAGTAGATTACTT'
+    seq_line = sys.stdin.read().rstrip()
+
     print(generate_reverse_complement(seq_line))
 
 

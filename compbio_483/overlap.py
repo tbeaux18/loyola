@@ -70,6 +70,10 @@ class Node:
 class OverlapGraph:
     """ Overlap Graph Object that consists of many Node Objects
 
+        Attributes:
+            node_dict (dct)
+            node_prefix (dct)
+            num_of_nodes (int)
         Methods:
             add_node(self, record_id, sequence)
             add_edges(self)
