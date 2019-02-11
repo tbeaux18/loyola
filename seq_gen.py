@@ -9,8 +9,6 @@ Random functions that can be called to generate random DNA sequences of x length
 """
 
 
-
-
 def build_dna_string(length):
     """ generates a single x length nucleotide sequence on 'ACGT' at random
         Args:
@@ -94,12 +92,12 @@ def main():
 
     # If just creating random DNA sequences of x length the below
     # list comprehension will generate a list of sequences.
-    sequence_list = [build_dna_string(10) for i in range(1, 5)]
+    sequence_list = [build_dna_string(20) for i in range(1, 3)]
     # If wanting to create sequences with single motif implanted into
     # each sequence in the sequence_list.
     motif_sequence_list = implant_motif(sequence_list, 10)
 
-    print(motif_sequence_list)
+    print(sequence_list)
 
 if __name__ == '__main__':
     main()
