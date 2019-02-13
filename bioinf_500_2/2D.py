@@ -20,6 +20,7 @@ Output:
 """
 
 import sys
+import collections
 from Bio.Seq import Seq
 
 
@@ -36,14 +37,22 @@ def main():
     reverse_strand = [str(r.reverse_complement()) for r in std_input]
 
     # define all nodes as the set union of forward and reverse strands
-    nodes = set(forward_strand) | set(reverse_strand)
+    edges = set(forward_strand) | set(reverse_strand)
 
-    # edges defined as the left and right kmers
-    edges = [(kmer, kmer[:-1], kmer[1:]) for kmer in nodes]
+    # nodes are the key, edges are the values
+    # the left and right kmers are nodes
+    # the full kmer is the edge
+    # if two nodes have the same edge, they are connected
+    deb_graph = collections.defaultdict(list)
+
+    for kmer in edges:
+        # left kmer
+        deb_graph[kmer[:-1]].append(kmer)
+        # right kmer
+        deb_graph[kmer[1:]].append(kmer)
 
     with open('2D-output.txt', 'w') as output:
-        for edge_pair in sorted(edges):
-            output.write("Kmer: {} L-Kmer: {} R-Kmer: {}\n".format(\
-            edge_pair[0], edge_pair[1], edge_pair[2]))
+        for key, value in deb_graph.items():
+            output.write("Node: {} Edges: {}\n".format(key, value))
 if __name__ == '__main__':
     main()
