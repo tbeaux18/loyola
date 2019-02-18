@@ -30,7 +30,6 @@ def generate_kmer(dna_sequence, kmer_length=3):
     return kmer_list
 
 
-
 def main():
     """ runs main script """
 

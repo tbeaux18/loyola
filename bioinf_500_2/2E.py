@@ -5,6 +5,11 @@
 
 2E.py
 
+Input:
+    kmer pattern 1 \n
+    kmer pattern n \n
+Output:
+    cycle
 """
 
 import sys
