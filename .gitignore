@@ -16,3 +16,5 @@
 # Excel files
 *.xlsx
 
+# DS
+*.DS_Store

@@ -34,7 +34,7 @@ class Node:
     def __init__(self, record_id, sequence):
         self.record_id = record_id
         self.node = sequence
-        self.kmer = int(3)
+        self.kmer = len(sequence) // 2
         self.connected_nodes = []
 
     def add_connected_nodes(self, conn_node):
@@ -134,7 +134,6 @@ def main():
     # Adds the edges to the graph connecting the suffix and prefix of each sequence
     # Utilizes 3mers only for the moment
     overlap_graph.add_edges()
-
 
     # initializes a temp formatting dict to how rosalind wants the result
     format_dict = {}
