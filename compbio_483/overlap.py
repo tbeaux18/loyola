@@ -34,7 +34,7 @@ class Node:
     def __init__(self, record_id, sequence):
         self.record_id = record_id
         self.node = sequence
-        self.kmer = len(sequence) // 2
+        self.kmer = int(3)
         self.connected_nodes = []
 
     def add_connected_nodes(self, conn_node):
@@ -143,7 +143,7 @@ def main():
         if result:
             format_dict[value] = result
 
-    with open('overlap-output.txt', 'w') as output:
+    with open('new-output.txt', 'w') as output:
         for key, value in format_dict.items():
             for val in value:
                 output.write("{} {}\n".format(key, seq_dict[val]))
