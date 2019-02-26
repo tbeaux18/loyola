@@ -18,3 +18,10 @@
 
 # DS
 *.DS_Store
+
+# FASTQ files
+*.fastq
+
+# FASTA files 
+*.fa
+*.fna

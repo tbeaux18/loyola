@@ -32,7 +32,8 @@ def main():
 
     st = STree.STree(sequence_list)
 
-    print(st.lcs())
+    with open('output-lcs.txt', 'w') as output:
+        output.write(st.lcs())
 
 
 if __name__ == '__main__':
