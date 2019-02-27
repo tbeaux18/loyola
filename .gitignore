@@ -25,3 +25,8 @@
 # FASTA files 
 *.fa
 *.fna
+
+# zip files
+*.zip
+
+

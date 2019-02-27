@@ -24,6 +24,7 @@ from Bio import SeqIO
 def main():
     """ runs main script """
 
+    # argv input list
     input_files = sys.argv
 
     flu_fasta = input_files[1]
@@ -32,19 +33,23 @@ def main():
 
     flu_fasta_ref = list(SeqIO.parse(flu_fasta, "fasta"))
     rhino_fasta_ref = list(SeqIO.parse(rhino_fasta, "fasta"))
-    patient_fastq_reads = list(SeqIO.parse(patient_fastq, "fastq"))
+    patient_fastq_reads = list(SeqIO.parse(patient_fastq, "fasta"))
 
+    # creates array of string objects of the sequences
     flu_seq = [str(flu.seq) for flu in flu_fasta_ref]
     rhi_seq = [str(rhi.seq) for rhi in rhino_fasta_ref]
 
+    # creating the suffix tree object
     flu_suffix = STree.STree(flu_seq)
     rhi_suffix = STree.STree(rhi_seq)
 
+    # arbitrary score, entire sequence must match to trigger
     flu_score = 0
     rhi_score = 0
 
     positive_strain_list = []
 
+    # goes through each contig, but sequence must match entirely
     for read in patient_fastq_reads:
 
         if flu_suffix.find_all(str(read.seq)):
