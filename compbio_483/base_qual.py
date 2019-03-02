@@ -23,22 +23,23 @@ def main():
     with open("fastq_text.txt", 'w') as tmp_fastq:
         tmp_fastq.writelines(std_input[1:])
 
-    temp_list = []
-
+    record_list = []
     for rec in SeqIO.parse("fastq_text.txt", "fastq"):
-        temp_list.append(rec.letter_annotations["phred_quality"])
+        record_list.append(rec.letter_annotations["phred_quality"])
 
-    for i in range(len(temp_list)):
-        for i in range(temp)
-    # holds the bad reads that do not meet the mean threshold
-    # bad_reads = (rec for rec in SeqIO.parse("fastq_text.txt", "fastq") \
-    #             for num in rec.letter_annotations["phred_quality"] \
-    #             if int(num) < threshold)
-    # # counts the reads
-    # count = SeqIO.write(bad_reads, "bad_qual.fastq", "fastq")
-    #
-    # # prints to console
-    # print(count)
+    per_base_quality = [float(0) for x in range(len(record_list[0]))]
+
+    for record in record_list:
+        for idx in enumerate(record):
+            per_base_quality[idx[0]] += record[idx[0]]
+
+    for index in enumerate(per_base_quality):
+        per_base_quality[index[0]] = per_base_quality[index[0]] / len(record_list)
+
+    base_numbers = len([i for i in per_base_quality if i < threshold])
+
+    print(base_numbers)
+
 
 if __name__ == '__main__':
     main()
